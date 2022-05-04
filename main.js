@@ -9,9 +9,9 @@
 // these URLs come from Google Sheets 'shareable link' form
 // the first is the geometry layer and the second the points
 let geomURL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTsAyA0Hpk_-WpKyN1dfqi5IPEIC3rqEiL-uwElxJpw_U7BYntc8sDw-8sWsL87JCDU4lVg2aNi65ES/pub?output=csv";
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTUZABlH_6hna54k_7VS_2viFunC-7MrNiE3ckoCnoe-b8AFioLy3FdLMD7n_tfk8x0VWrGLq6bqJSZ/pub?output=csv";
 let pointsURL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSFQw9sVY16eQmN5TIjOH7CUaxeZnl_v6LcdE2goig1pSe9I3hipeOn1sOwmC4fS0AURefRWwcKExct/pub?output=csv";
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTrpA6Tciwo7YLMx9DMCKqRY5nvAkNMR5HR3g-r9r0P-H_qeD9TlhlddDzBglvNdIyenRlcJcURUCAP/pub?output=csv";
 
 window.addEventListener("DOMContentLoaded", init);
 
@@ -25,7 +25,7 @@ let panelID = "my-info-panel";
 function init() {
   // Create a new Leaflet map centered on the continental US
   map = L.map("map").setView([51.5, -0.1], 14);
-
+  map.locate({setView: true, maxZoom: 16});
   // This is the Carto Positron basemap
   L.tileLayer(
     "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png",
@@ -162,7 +162,7 @@ function addPoints(data) {
         radius: markerRadius,
       });
     } else {
-      marker = L.marker([data[row].lat, data[row].lon]);
+      marker = L.marker([data[row].lat, data[row].lon]).bindPopup(data[row].description);
     }
     marker.addTo(pointGroupLayer);
 
